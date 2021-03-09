@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from datetime import datetime
+import asyncio
 from aiohttp import ClientSession
 
 class Dm(commands.Cog):
@@ -22,6 +23,9 @@ class Dm(commands.Cog):
 
 					await ctx.channel.purge(limit=1)
 					await webhook.send(content = message, username = member.name, avatar_url = member.avatar_url)
+					await ctx.send('LOL')
+					await asyncio.sleep(1)
+					await ctx.channel.purge(limit=1)
 
 	@commands.command(aliases=['BI','bi','Bi','BOTINFO','BotInfo'])
 	async def botinfo(self,ctx):

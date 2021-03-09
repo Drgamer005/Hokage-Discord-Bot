@@ -22,7 +22,7 @@ class Help(commands.Cog):
 		if choice == None:
 
 			embed=discord.Embed(title='Hokage Commands',colour=discord.Colour.blue())
-			embed.add_field(name='```These are my help catagories```',value='``help general``\n``help anime``\n``help economy``\n``help admin``\n``help music``\n``help extra``\n``help owner``')
+			embed.add_field(name='```These are my help catagories```',value='``help general``\n``help anime``\n``help economy``\n``help admin``\n``help music``\n``help images``\n``help bot``\n``help extra``')
 			embed.set_footer(text=f'Use command prefix "{pre}"',icon_url=ctx.author.avatar_url)
 			await ctx.send(embed=embed)
 
@@ -34,9 +34,16 @@ class Help(commands.Cog):
 			
 			await ctx.send(embed=embed)
 
+		elif choice.lower() == 'images':
+			embed=discord.Embed(title='Help Images',description='This shows all the fun anime commands',colour=discord.Colour.blue())
+			embed.add_field(name='Commands',value='`funlist - shows a list of fun image commands`\n`wanted - takes a users photo and makes him a wanted criminal`')
+			embed.set_footer(text=f'Use command prefix "{pre}" ',icon_url=ctx.author.avatar_url)
+
+			await ctx.send(embed=embed)
+
 		elif choice.lower() == 'anime':
 			embed=discord.Embed(title='Help Anime',description='This shows all the fun anime commands',colour=discord.Colour.blue())
-			embed.add_field(name='Commands',value='`naruto - tells u info about naruto(type any naruto characters name to get his/her info)`')
+			embed.add_field(name='Commands',value='`!!!!!!!!!!!!!!!!!!!!!!!IN PROGRESS!!!!!!!!!!!!!!!!!!!!!!!!!!!!`')
 			embed.set_footer(text=f'Use command prefix "{pre}" ',icon_url=ctx.author.avatar_url)
 			await ctx.send(embed=embed)
 
@@ -48,7 +55,7 @@ class Help(commands.Cog):
 
 		elif choice.lower() == 'extra':
 			embed=discord.Embed(title='Help Extra',description='This shows all the extra commands',colour=discord.Colour.blue())
-			embed.add_field(name='Commands',value='`invite - gives a link to invite the bot to ur server`\n`clear - clears recent messages`\n`botinfo - tells u stats about the bot`\n`servers - tells u all servers the bot is in`\n`totalcmds- tells the total number of cmds the bot has`\n`help - shows u these catagories to pick from`')
+			embed.add_field(name='Commands',value='`clear - clears recent messages`\n`botinfo - tells u stats about the bot`\n`servers - tells u all servers the bot is in`\n`totalcmds- tells the total number of cmds the bot has`\n`help - shows u these catagories to pick from`')
 			embed.set_footer(text=f'Use command prefix "{pre}" ',icon_url=ctx.author.avatar_url)
 			await ctx.send(embed=embed)
 
@@ -66,9 +73,9 @@ class Help(commands.Cog):
 			embed.set_footer(text=f'Use command prefix "{pre}" ',icon_url=ctx.author.avatar_url)
 			await ctx.send(embed=embed)
 
-		elif choice.lower() == 'owner':
-			embed=discord.Embed(title='Help Owner',description='This shows all owner commands',colour=discord.Colour.blue())
-			embed.add_field(name='Commands',value='')
+		elif choice.lower() == 'bot':
+			embed=discord.Embed(title='Help bot',description='Info commands',colour=discord.Colour.blue())
+			embed.add_field(name='commands...',value="`invite - invite Hokage to your server`\n`GitHub - see Gaara's GitHub page and star repo`")
 			embed.set_footer(text=f'Use command prefix "{pre}" ',icon_url=ctx.author.avatar_url)
 			await ctx.send(embed=embed)
 
@@ -76,6 +83,13 @@ class Help(commands.Cog):
 			await ctx.send('No help command found try typing ***help*** for more info')
 
   
+	@commands.command()
+	async def help2(self,ctx):
+		helptext = "`"
+		for command in self.client.commands:
+				helptext+=f"{command}\n"
+		helptext+="`"
+		await ctx.send(helptext)
 
 def setup(client):
   client.add_cog(Help(client))

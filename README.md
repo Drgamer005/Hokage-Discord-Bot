@@ -1,7 +1,6 @@
 # Hokage-Discord-Bot
 Its still in development but has some fun cmds 
-DOONT READ ME IM BORING
-.
+
 
 
 

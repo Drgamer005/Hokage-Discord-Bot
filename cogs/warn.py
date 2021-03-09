@@ -5,7 +5,7 @@ from pymongo import MongoClient
 import asyncio
 
 
-cluster = MongoClient(getenv("WARN_PASS")) # Don't include "<" and ">" fill in those with your credentials
+cluster = MongoClient(getenv("MONGO")) # Don't include "<" and ">" fill in those with your credentials
 collection = cluster.dr.dr
 
 class Warn(commands.Cog):

@@ -4,7 +4,8 @@ import os
 import json
 import random
 import aiohttp
-from PIL import Image
+import getenv
+from PIL import Image,ImageFont,ImageDraw
 from io import BytesIO
 from run_forever import run_forever
 
@@ -150,7 +151,11 @@ async def on_command_error(ctx, error):
 
 		embed=discord.Embed(title='Missing Permissions',description='You are missing permissions to run this command buddy',colour=discord.Colour.blue())
 		await ctx.send(embed=embed)
+	elif isinstance(error, commands.MissingPermissions):
 
+		embed=discord.Embed(title='Missing Permissions',description='You are missing permissions to run this command buddy',colour=discord.Colour.blue())
+		await ctx.send(embed=embed)
+		
 	elif isinstance(error, commands.CommandNotFound):
 
 
@@ -605,12 +610,44 @@ async def wanted(ctx, user: discord.Member = None):
 	pfp = pfp.resize((265,267))
 
 	wanted.paste(pfp, (92,192))
-	wanted.save("Wanted.jpg")
+	wanted.save("Wantedoutput.jpg")
 
-	await ctx.send(file = discord.File("Wanted.jpg"))
+	await ctx.send(file = discord.File("Wantedoutput.jpg"))
+
+@client.command()
+async def note(ctx, *,text = "No text entered"):
+
+	note = Image.open ("note.png")
+
+	draw = ImageDraw.Draw(note)
+	font = ImageFont.truetype("Roboto.ttf", 25)
+
+	draw.text((426,440), text, (0,0,0),font = font)
+
+	note.save("noteoutput.png")
+
+	await ctx.send(file = discord.File("noteoutput.png"))
 
 
+@client.command(pass_context=True)
+async def giphy(ctx, *, search):
+    embed = discord.Embed(colour=discord.Colour.blue())
+    session = aiohttp.ClientSession()
 
+    if search == '':
+        response = await session.get(f'https://api.giphy.com/v1/gifs/random?api_key={getenv("")}')
+        data = json.loads(await response.text())
+        embed.set_image(url=data['data']['images']['original']['url'])
+    else:
+        search.replace(' ', '+')
+        response = await session.get('http://api.giphy.com/v1/gifs/search?q=' + search + f'&api_key={getenv("gify")}')
+        data = json.loads(await response.text())
+        gif_choice = random.randint(0, 9)
+        embed.set_image(url=data['data'][gif_choice]['images']['original']['url'])
+
+    await session.close()
+
+    await ctx.send(embed=embed)
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):

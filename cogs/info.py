@@ -107,18 +107,18 @@ class Info(commands.Cog):
 			embed.add_field(name=":ballot_box: Name", value=f"{ctx.guild}")
 			embed.add_field(name=":crown: Owner", value=f"{own.mention}")
 			embed.add_field(
-					name="Members",
+					name=":person_red_hair:Members",
 					value=f"{ctx.guild.member_count}",
 			)
 			embed.add_field(
-					name="Region", value=f"{reg.capitalize()}"
+					name=":airplane:Region", value=f"{reg.capitalize()}"
 			)
-			embed.add_field(name="Created At", value=f"{tim[0:11]}")
+			embed.add_field(name=":alarm_clock:Created At", value=f"{tim[0:11]}")
 			embed.add_field(
-					name="Text Channels", value=f"{txt}"
+					name=":speech_balloon:Text Channels", value=f"{txt}"
 			)
 			embed.add_field(
-					name="Voice Channels", value=f"{vc}"
+					name=":loud_sound:Voice Channels", value=f"{vc}"
 			)
 			embed.set_footer(
 					text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}"
