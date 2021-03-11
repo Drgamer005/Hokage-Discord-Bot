@@ -4,8 +4,9 @@ import os
 import json
 import random
 import aiohttp
-import getenv
-from PIL import Image,ImageFont,ImageDraw
+from os import getenv
+from typing import Optional
+from PIL import Image,ImageFont,ImageDraw,ImageFilter
 from io import BytesIO
 from run_forever import run_forever
 
@@ -151,11 +152,6 @@ async def on_command_error(ctx, error):
 
 		embed=discord.Embed(title='Missing Permissions',description='You are missing permissions to run this command buddy',colour=discord.Colour.blue())
 		await ctx.send(embed=embed)
-	elif isinstance(error, commands.MissingPermissions):
-
-		embed=discord.Embed(title='Missing Permissions',description='You are missing permissions to run this command buddy',colour=discord.Colour.blue())
-		await ctx.send(embed=embed)
-		
 	elif isinstance(error, commands.CommandNotFound):
 
 
@@ -622,12 +618,265 @@ async def note(ctx, *,text = "No text entered"):
 	draw = ImageDraw.Draw(note)
 	font = ImageFont.truetype("Roboto.ttf", 25)
 
-	draw.text((426,440), text, (0,0,0),font = font)
-
+	draw.text((426,457), text, (0,0,0),font = font)
 	note.save("noteoutput.png")
 
 	await ctx.send(file = discord.File("noteoutput.png"))
 
+
+@client.command()
+async def shit(ctx, *,text = "No text entered"):
+
+	shit = Image.open ("shit.jpg")
+
+	draw = ImageDraw.Draw(shit)
+	font = ImageFont.truetype("Roboto.ttf", 25)
+
+	draw.text((276,844), text, (0,0,0),font = font)
+	shit.save("shitoutput.jpg")
+
+	await ctx.send(file = discord.File("shitoutput.jpg"))
+
+
+@client.command()
+async def brain(ctx,text=None,text2=None,text3=None,text4=None):
+	
+	if text == None or text2 == None or text3 == None or text4 == None:
+		text="you need"
+		text2="4 values"
+		text3="seperated by"
+		text4="spaces"
+
+		shit = Image.open ("brain.jpg")
+
+		draw = ImageDraw.Draw(shit)
+		font = ImageFont.truetype("Roboto.ttf", 35)
+
+		draw.text((68,143), text, (0,0,0),font = font)
+		draw.text((68,453), text2, (0,0,0),font = font)
+		draw.text((68,744), text3, (0,0,0),font = font)
+		draw.text((68,1047), text4, (0,0,0),font = font)
+		shit.save("brainoutput.jpg")
+
+		return await ctx.send(file = discord.File("brainoutput.jpg"))
+
+	else:
+		
+		shit = Image.open ("brain.jpg")
+
+		draw = ImageDraw.Draw(shit)
+		font = ImageFont.truetype("Roboto.ttf", 35)
+
+		draw.text((68,143), text, (0,0,0),font = font)
+		draw.text((68,453), text2, (0,0,0),font = font)
+		draw.text((68,744), text3, (0,0,0),font = font)
+		draw.text((68,1047), text4, (0,0,0),font = font)
+		shit.save("brainoutput.jpg")
+
+		await ctx.send(file = discord.File("brainoutput.jpg"))
+
+@client.command()
+async def trash(ctx,member:discord.Member=None):
+  if member == None:
+    member = ctx.author
+
+  im = Image.open('trash.png')
+
+  asset = member.avatar_url_as(format=None, static_format='jpg', size=128)
+  data = BytesIO(await asset.read())
+  pfp = Image.open(data)
+  pfp = pfp.filter(ImageFilter.BLUR)
+  pfp = pfp.resize((480,480))
+
+  im.paste(pfp, (480,0))
+
+  im.save('trashed.png')
+
+  await ctx.send(file=discord.File('trashed.png'))
+
+def convert_mode(im):
+    if im.mode != 'RGBA':
+        im = im.convert('RGBA')
+        im.putalpha(255)
+    return im
+
+def mask_circle(im):
+    bigsize = (im.size[0] * 3, im.size[1] * 3)
+    mask = Image.new('L', bigsize, 0)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse((0, 0) + bigsize, fill=255)
+    mask = mask.resize(im.size, Image.ANTIALIAS)
+    im.putalpha(mask)
+
+    return im
+
+@client.command()
+async def choice(ctx,member:discord.Member=None,text=None,text2=None):
+	if text == None or text2 == None:
+		text="u need 2"
+		text2="values fr dis"
+		if member == None:
+			member = ctx.author
+
+		im = Image.open ("choice.png")
+
+		draw = ImageDraw.Draw(im)
+		font = ImageFont.truetype("Roboto.ttf", 18)
+
+		draw.text((27,43), text, (0,0,0),font = font)
+		draw.text((91,32), text2, (0,0,0),font = font)
+
+		im = convert_mode(im)
+		asset = member.avatar_url_as(format=None, static_format='png', size=128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		mask_circle(pfp)
+		pfp = pfp.resize((50,50))
+		mask_circle(pfp)
+		im.alpha_composite(pfp, dest=(66,182))
+		im.save("choiceoutput.png")
+
+		await ctx.send(file = discord.File("choiceoutput.png"))
+	else:
+		if member == None:
+			member = ctx.author
+
+		im = Image.open ("choice.png")
+
+
+		draw = ImageDraw.Draw(im)
+		font = ImageFont.truetype("Roboto.ttf", 18)
+
+		draw.text((27,43), text, (0,0,0),font = font)
+		draw.text((91,32), text2, (0,0,0),font = font)
+
+		im = convert_mode(im)
+		asset = member.avatar_url_as(format=None, static_format='png', size=128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		mask_circle(pfp)
+		pfp = pfp.resize((70,70))
+		mask_circle(pfp)
+		im.alpha_composite(pfp, dest=(66,162))
+		im.save("choiceoutput.png")
+
+		await ctx.send(file = discord.File("choiceoutput.png"))
+
+@client.command()
+async def inspired(ctx,member:discord.Member=None, *,text = "No text entered"):
+
+    if member == None:
+      member = ctx.author
+
+    im = Image.open ("inspired.png")
+
+    draw = ImageDraw.Draw(im)
+    font = ImageFont.truetype("Roboto.ttf", 30)
+
+    draw.text((93,613), text, (0,0,0),font = font)
+
+    asset = member.avatar_url_as(format=None, static_format='png', size=128)
+    data = BytesIO(await asset.read())
+    pfp = Image.open(data)
+    mask_circle(pfp)
+    pfp = pfp.resize((170,170))
+    mask_circle(pfp)
+    im.alpha_composite(pfp, dest=(724,731))
+    im.save("inspiredoutput.png")
+
+    await ctx.send(file = discord.File("inspiredoutput.png"))
+
+
+@client.command()
+async def worthless(ctx, victim : Optional[discord.User] = None, message : str = None):
+    im = Image.open ("meme.jpg")
+
+    draw = ImageDraw.Draw(im)
+    font = ImageFont.truetype("Roboto.ttf", 20)
+    if victim == None:
+
+      draw.text((98,93), message, (0,0,0),font = font)
+      
+      im = convert_mode(im)
+      asset = ctx.author.avatar_url_as(format=None, static_format='png', size=128)
+      data = BytesIO(await asset.read())
+      pfp = Image.open(data)
+      pfp = convert_mode(pfp)
+      pfp = pfp.resize((117, 117))
+      mask_circle(pfp)
+      im.alpha_composite(pfp, dest=(157,304))
+      im.save("worthlessoutput.png")
+
+      return await ctx.send(file = discord.File("worthlessoutput.png"))
+
+    else:
+      
+      
+      im = convert_mode(im)
+      asset = ctx.author.avatar_url_as(format=None, static_format='png', size=128)
+      data = BytesIO(await asset.read())
+      pfp = Image.open(data)
+      pfp = convert_mode(pfp)
+      pfp = pfp.resize((117, 117))
+      asset2 = victim.avatar_url_as(format=None, static_format='png', size=128)
+      data2 = BytesIO(await asset2.read())
+      pfp2 = Image.open(data2)
+      pfp2 = convert_mode(pfp2)
+      pfp2 = pfp2.resize((131, 131))
+      mask_circle(pfp)
+      mask_circle(pfp2)
+      im.alpha_composite(pfp, dest=(157,304))
+      im.alpha_composite(pfp2, dest=(139,81))
+      im.save("worthlessoutput.png")
+
+      return await ctx.send(file = discord.File("worthlessoutput.png"))
+def convert_mode(im):
+    if im.mode != 'RGBA':
+        im = im.convert('RGBA')
+        im.putalpha(255)
+    return im
+
+
+@client.command()
+async def coffin(ctx, *,text = "No text entered"):
+
+    im = Image.open ("coffin.jpg")
+
+    draw = ImageDraw.Draw(im)
+    font = ImageFont.truetype("bold.ttf", 70)
+
+    draw.text((703,289), text, (0,0,0),font = font)
+
+    im.save("coffinoutput.jpg")
+
+    await ctx.send(file = discord.File("coffinoutput.jpg"))
+
+@client.command()
+async def violence(ctx, *,text = "No text entered"):
+	im = Image.open ("violence.png")
+
+	draw = ImageDraw.Draw(im)
+	font = ImageFont.truetype("Roboto.ttf", 35)
+
+	draw.text((525,31), text, (0,0,0),font = font)
+
+	im.save("violenceoutput.png")
+
+	await ctx.send(file = discord.File("violenceoutput.png"))
+
+@client.command()
+async def savehumanity(ctx, *,text = "No text entered"):
+
+    im = Image.open ("save.png")
+
+    draw = ImageDraw.Draw(im)
+    font = ImageFont.truetype("Roboto.ttf", 20)
+
+    draw.text((488,446), text, (0,0,0),font = font)
+
+    im.save("savehumanty.png")
+
+    await ctx.send(file = discord.File("savehumanty.png"))
 
 @client.command(pass_context=True)
 async def giphy(ctx, *, search):
@@ -635,12 +884,12 @@ async def giphy(ctx, *, search):
     session = aiohttp.ClientSession()
 
     if search == '':
-        response = await session.get(f'https://api.giphy.com/v1/gifs/random?api_key={getenv("")}')
+        response = await session.get('https://api.giphy.com/v1/gifs/random?api_key=PLFVzKUC00bxDSu1Hyv1eG0NLgL81Dcu')
         data = json.loads(await response.text())
         embed.set_image(url=data['data']['images']['original']['url'])
     else:
         search.replace(' ', '+')
-        response = await session.get('http://api.giphy.com/v1/gifs/search?q=' + search + f'&api_key={getenv("gify")}')
+        response = await session.get('http://api.giphy.com/v1/gifs/search?q=' + search + '&api_key=PLFVzKUC00bxDSu1Hyv1eG0NLgL81Dcu')
         data = json.loads(await response.text())
         gif_choice = random.randint(0, 9)
         embed.set_image(url=data['data'][gif_choice]['images']['original']['url'])
@@ -654,4 +903,5 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 run_forever()
-client.run(os.getenv('TOKEN'))
+
+client.run(getenv('TOKEN'))

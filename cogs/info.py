@@ -136,7 +136,7 @@ class Info(commands.Cog):
 
 	@commands.command(aliases=['INVITE','Invite'])
 	async def invite(self,ctx):
-		embed=discord.Embed(title='Invite Me here',description='[Click Here](https://discord.com/api/oauth2/authorize?client_id=797519687147585546&permissions=0&scope=bot)',colour=discord.Colour.blue())  
+		embed=discord.Embed(title='Invite Me here',description='[Click Here](https://discord.com/api/oauth2/authorize?client_id=797519687147585546&permissions=8&scope=bot)',colour=discord.Colour.blue())  
 		await ctx.send(embed=embed)
 
 

@@ -46,7 +46,10 @@ class Dm(commands.Cog):
 							("🤖Name", "Hokage",True),
 							(":sunglasses: No. of servers", int(len(list(self.client.guilds))),True),
 							('🦮Helping',f'{mh} members',True),
-							("📝Invite me","[Click Here to Add Me](https://discord.com/api/oauth2/authorize?client_id=800219427928801290&permissions=8&scope=bot)",True)]
+							("📝Invite me","[Click Here to Add Me](https://discord.com/api/oauth2/authorize?client_id=797519687147585546&permissions=8&scope=bot)",True),
+							("⛭GitHub","[Click Here to See GitHub](https://github.com/Drgamer005/Hokage-Discord-Bot)",True),
+							("🦮Join My server","[Click Here To Join](https://discord.gg/RSz98FM7c5)",True),
+							]
 							
 
 		for name,value,inline in fields:
